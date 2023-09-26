@@ -1,0 +1,22 @@
+version: '3'
+services:
+  odoo:
+    image: odoo:16.0
+    depends_on:
+      - db
+    ports:
+      - "8069:8069"
+    volumes:
+      - ../odoo/addons:/usr/lib/python3/dist-packages/odoo/addons:Z
+      - ../addons:/var/lib/odoo/addons/16.0:Z
+      - ..:/home/workspace:Z
+    tty: true
+    platform: linux/amd64
+  
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
+    
